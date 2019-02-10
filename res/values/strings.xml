@@ -39,4 +39,8 @@
     <string name="pulse_on_new_tracks_title">Ambient music ticker</string>
     <string name="pulse_on_new_tracks_summary">Show Ambient Display when a new music track is played. Double tap on track info to skip to next track.</string>
     <string name="pulse_on_new_tracks_soli_summary">Show Ambient Display when a new music track is played</string>
+
+    <!-- Doze on charge -->
+    <string name="doze_on_charge_title">Always on when charging</string>
+    <string name="doze_on_charge_summary">Show doze screen all the time when charging</string>
 </resources>

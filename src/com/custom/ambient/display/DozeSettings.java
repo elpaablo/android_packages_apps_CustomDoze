@@ -70,6 +70,7 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
         private SwitchPreference mPickUpPreference;
         private SwitchPreference mHandwavePreference;
         private SwitchPreference mPocketPreference;
+        private SystemSettingSwitchPreference mDozeOnChargePreference;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -85,10 +86,14 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mAoDPreference =
                 (SwitchPreference) findPreference(Utils.AOD_KEY);
 
+            mDozeOnChargePreference =
+                (SystemSettingSwitchPreference) findPreference(Utils.AOD_CHARGE_KEY);
+
             if (Utils.isAoDAvailable(mContext)) {
                 mAoDPreference.setChecked(Utils.isAoDEnabled(mContext));
                 mAoDPreference.setOnPreferenceChangeListener(this);
             } else {
+                mDozeOnChargePreference.setVisible(false);
                 mAoDPreference.setVisible(false);
             }
 
@@ -165,6 +170,7 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mPickUpPreference.setEnabled(!aodEnabled);
             mHandwavePreference.setEnabled(!aodEnabled);
             mPocketPreference.setEnabled(!aodEnabled);
+            mDozeOnChargePreference.setEnabled(!aodEnabled);
         }
 
         @Override
