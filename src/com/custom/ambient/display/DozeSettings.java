@@ -28,8 +28,8 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.PreferenceFragment;
 import android.view.MenuItem;
 
-import com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference;
-import com.dirtyunicorns.support.preferences.SystemSettingSeekBarPreference;
+import com.nusantara.support.preferences.SystemSettingSwitchPreference;
+import com.nusantara.support.preferences.SystemSettingSeekBarPreference;
 
 public class DozeSettings extends PreferenceActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
 
@@ -70,11 +70,6 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
         private SwitchPreference mPickUpPreference;
         private SwitchPreference mHandwavePreference;
         private SwitchPreference mPocketPreference;
-        private SystemSettingSwitchPreference mDozeOnChargePreference;
-        private SystemSettingSeekBarPreference mDozeBrightness;
-        private SystemSettingSeekBarPreference mPulseBrightness;
-        private SystemSettingSwitchPreference mDoubleTapPreference;
-        private SystemSettingSwitchPreference mMusicTickerPreference;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -90,20 +85,11 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mAoDPreference =
                 (SwitchPreference) findPreference(Utils.AOD_KEY);
 
-            mDozeOnChargePreference =
-                (SystemSettingSwitchPreference) findPreference(Utils.AOD_CHARGE_KEY);
-
-            mDoubleTapPreference =
-                (SystemSettingSwitchPreference) findPreference(Utils.DOUBLE_TAP_KEY);
-            mMusicTickerPreference =
-                (SystemSettingSwitchPreference) findPreference(Utils.MUSIC_TICKER_KEY);
-
             if (Utils.isAoDAvailable(mContext)) {
                 mAoDPreference.setChecked(Utils.isAoDEnabled(mContext));
                 mAoDPreference.setOnPreferenceChangeListener(this);
             } else {
                 mAoDPreference.setVisible(false);
-                mDozeOnChargePreference.setVisible(false);
             }
 
             mAmbientDisplayPreference =
@@ -125,26 +111,6 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 (SwitchPreference) findPreference(Utils.GESTURE_POCKET_KEY);
             mPocketPreference.setChecked(Utils.pocketGestureEnabled(mContext));
             mPocketPreference.setOnPreferenceChangeListener(this);
-
-            int defaultDoze = getResources().getInteger(
-                    com.android.internal.R.integer.config_screenBrightnessDoze);
-            int defaultPulse = getResources().getInteger(
-                    com.android.internal.R.integer.config_screenBrightnessPulse);
-            if (defaultPulse == -1) {
-                defaultPulse = defaultDoze;
-            }
-
-            mPulseBrightness = (SystemSettingSeekBarPreference) findPreference(Utils.PULSE_BRIGHTNESS_KEY);
-            int value = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.PULSE_BRIGHTNESS, defaultPulse);
-            mPulseBrightness.setValue(value);
-            mPulseBrightness.setOnPreferenceChangeListener(this);
-
-            mDozeBrightness = (SystemSettingSeekBarPreference) findPreference(Utils.DOZE_BRIGHTNESS_KEY);
-            value = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.DOZE_BRIGHTNESS, defaultDoze);
-            mDozeBrightness.setValue(value);
-            mDozeBrightness.setOnPreferenceChangeListener(this);
 
             if (!getResources().getBoolean(R.bool.has_tilt_sensor)) {
                 mPickUpPreference.setVisible(false);
@@ -189,37 +155,16 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 mPocketPreference.setChecked(value);
                 Utils.enablePocketMode(value, mContext);
                 return true;
-            } else if (preference == mPulseBrightness) {
-                int value = (Integer) newValue;
-                Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.PULSE_BRIGHTNESS, value);
-                return true;
-            } else if (preference == mDozeBrightness) {
-                int value = (Integer) newValue;
-                Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.DOZE_BRIGHTNESS, value);
-            } else if (Utils.DOUBLE_TAP_KEY.equals(key)) {
-                if (!Utils.isTapToWakeEnabled(mContext)); {
-                    Settings.Secure.putInt(mContext.getContentResolver(),
-                            Settings.Secure.DOUBLE_TAP_TO_WAKE, 1);
-                }
-                return true;
             }
             return false;
         }
 
         private void setPrefs() {
             final boolean aodEnabled = Utils.isAoDEnabled(mContext);
-            final boolean aodChargeEnabled = Utils.isAoDChargeEnabled(mContext);
             mAmbientDisplayPreference.setEnabled(!aodEnabled);
             mPickUpPreference.setEnabled(!aodEnabled);
             mHandwavePreference.setEnabled(!aodEnabled);
             mPocketPreference.setEnabled(!aodEnabled);
-            mDozeOnChargePreference.setEnabled(!aodEnabled);
-            mDozeBrightness.setEnabled(aodEnabled || aodChargeEnabled);
-            mPulseBrightness.setEnabled(!aodEnabled);
-            mDoubleTapPreference.setEnabled(!aodEnabled);
-            mMusicTickerPreference.setEnabled(!aodEnabled);
         }
 
         @Override

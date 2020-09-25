@@ -1,0 +1,24 @@
+android_app {
+    name: "CustomDoze",
+    platform_apis: true,
+    certificate: "platform",
+    privileged: true,
+
+    resource_dirs: ["res"],
+    srcs: ["src/**/*.java"],
+
+    defaults: [
+        "SettingsLibDefaults",
+    ],
+
+    static_libs: [
+        "VendorSupportLib",
+    ],
+
+    required: [
+        "privapp_whitelist_com.custom.ambient.display",
+    ],
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+}

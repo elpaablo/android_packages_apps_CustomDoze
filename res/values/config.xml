@@ -18,5 +18,4 @@
 <resources>
     <bool name="has_tilt_sensor">true</bool>
     <bool name="has_proximity_sensor">true</bool>
-
 </resources>

@@ -19,18 +19,6 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="doze_elements"
-        android:title="@string/doze_elements_title" >
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference
-            android:key="ambient_battery_percent"
-            android:title="@string/ambient_battery_percent_title"
-            android:summary="@string/ambient_battery_percent_summary"
-            android:defaultValue="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="doze_trigger_key"
         android:title="@string/doze_trigger_title" >
 
@@ -40,36 +28,17 @@
             android:title="@string/aod_setting_title"
             android:summary="@string/aod_setting_summary" />
 
-        <com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference
-            android:key="doze_on_charge"
-            android:defaultValue="false"
-            android:title="@string/doze_on_charge_title"
-            android:summary="@string/doze_on_charge_summary" />
-
         <SwitchPreference
             android:key="ambient_display"
             android:defaultValue="true"
             android:title="@string/ambient_display_notifications"
             android:summary="@string/ambient_display_summary" />
 
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference
-            android:key="pulse_on_new_tracks"
-            android:defaultValue="true"
-            android:title="@string/pulse_on_new_tracks_title"
-            android:summary="@string/pulse_on_new_tracks_summary" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="gestures"
         android:title="@string/gestures_title" >
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference
-            android:key="doze_trigger_doubletap"
-            android:defaultValue="false"
-            android:title="@string/doze_double_tap_title"
-            android:summary="@string/doze_double_tap_summary" />
 
         <SwitchPreference
             android:key="pick_up"
@@ -89,30 +58,5 @@
             android:title="@string/pocket_gesture_title"
             android:summary="@string/pocket_gesture_summary" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="brightness"
-        android:title="@string/brightness_title" >
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSeekBarPreference
-            android:key="doze_brightness"
-            android:title="@string/ambient_doze_brightness_title"
-            android:max="255"
-            settings:min="1"
-            android:persistent="false" />
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSeekBarPreference
-            android:key="pulse_brightness"
-            android:title="@string/ambient_pulse_brightness_title"
-            android:max="255"
-            settings:min="1"
-            android:persistent="false" />
-
-        <com.dirtyunicorns.support.preferences.SystemSettingSwitchPreference
-            android:key="doze_brightness_force"
-            android:title="@string/doze_brightness_force_title"
-            android:summary="@string/doze_brightness_force_summary"
-            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

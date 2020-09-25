@@ -36,15 +36,10 @@ public final class Utils {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     protected static final String AOD_KEY = "always_on_ambient";
-    protected static final String AOD_CHARGE_KEY = "doze_on_charge";
     protected static final String AMBIENT_DISPLAY_KEY = "ambient_display";
     protected static final String PICK_UP_KEY = "pick_up";
     protected static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
     protected static final String GESTURE_POCKET_KEY = "gesture_pocket";
-    protected static final String DOZE_BRIGHTNESS_KEY = "doze_brightness";
-    protected static final String PULSE_BRIGHTNESS_KEY = "pulse_brightness";
-    protected static final String DOUBLE_TAP_KEY = "doze_trigger_doubletap";
-    protected static final String MUSIC_TICKER_KEY = "pulse_on_new_tracks";
 
     protected static void startService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
@@ -75,11 +70,6 @@ public final class Utils {
                 Settings.Secure.DOZE_ALWAYS_ON, 0) != 0;
     }
 
-    protected static boolean isAoDChargeEnabled(Context context) {
-        return Settings.System.getInt(context.getContentResolver(),
-                Settings.System.DOZE_ON_CHARGE, 0) != 0;
-    }
-
     protected static boolean isAoDAvailable(Context context) {
         final AmbientDisplayConfiguration config = new AmbientDisplayConfiguration(context);
         return config.alwaysOnAvailable();
@@ -89,7 +79,6 @@ public final class Utils {
         boolean enabled = Settings.Secure.putInt(context.getContentResolver(),
                 Settings.Secure.DOZE_ALWAYS_ON, enable ? 1 : 0);
         if (enable) {
-            enableDoubleTap(false, context);
             enablePickUp(false, context);
             enableHandWave(false, context);
             enablePocketMode(false, context);
@@ -101,16 +90,6 @@ public final class Utils {
     protected static boolean isDozeEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.DOZE_ENABLED, 1) != 0;
-    }
-
-    protected static boolean isTapToWakeEnabled(Context context) {
-        return Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0) != 0;
-    }
-
-    protected static boolean isTapToWakeAvailable(Context context) {
-        return context.getResources().getBoolean(
-            com.android.internal.R.bool.config_supportDoubleTapWake);
     }
 
     protected static boolean tiltGestureEnabled(Context context) {
@@ -132,12 +111,6 @@ public final class Utils {
         boolean enabled = Settings.Secure.putInt(context.getContentResolver(),
                 Settings.Secure.DOZE_ENABLED, enable ? 1 : 0);
         // don't start the service, for notifications pulse we don't need the proximity sensor check here
-        return enabled;
-    }
-
-    protected static boolean enableDoubleTap(boolean enable, Context context) {
-        boolean enabled = Settings.System.putInt(context.getContentResolver(),
-                Settings.System.DOZE_TRIGGER_DOUBLETAP, enable ? 1 : 0);
         return enabled;
     }
 
