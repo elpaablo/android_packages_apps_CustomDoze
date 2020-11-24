@@ -34,4 +34,9 @@
     <string name="hand_wave_gesture_summary">Wave hand above your phone to check time, notification icons and other info</string>
     <string name="pocket_gesture_title">Pocket</string>
     <string name="pocket_gesture_summary">Take out your phone from pocket to check time, notification icons and other info</string>
+
+    <!-- Pulse on new track -->
+    <string name="pulse_on_new_tracks_title">Ambient music ticker</string>
+    <string name="pulse_on_new_tracks_summary">Show Ambient Display when a new music track is played. Double tap on track info to skip to next track.</string>
+    <string name="pulse_on_new_tracks_soli_summary">Show Ambient Display when a new music track is played</string>
 </resources>
