@@ -11,10 +11,6 @@ android_app {
         "SettingsLibDefaults",
     ],
 
-    static_libs: [
-        "VendorSupportLib",
-    ],
-
     required: [
         "privapp_whitelist_com.custom.ambient.display",
     ],

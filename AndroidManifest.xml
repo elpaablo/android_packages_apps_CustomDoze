@@ -32,6 +32,10 @@
             android:name=".DozeSettings"
             android:label="@string/ambient_display_title"
             android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="com.custom.ambient.display.DOZE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>

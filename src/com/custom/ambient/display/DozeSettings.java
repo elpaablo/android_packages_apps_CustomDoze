@@ -28,9 +28,6 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.PreferenceFragment;
 import android.view.MenuItem;
 
-import com.nusantara.support.preferences.SystemSettingSwitchPreference;
-import com.nusantara.support.preferences.SystemSettingSeekBarPreference;
-
 public class DozeSettings extends PreferenceActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
 
     @Override
@@ -70,7 +67,8 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
         private SwitchPreference mPickUpPreference;
         private SwitchPreference mHandwavePreference;
         private SwitchPreference mPocketPreference;
-        private SystemSettingSwitchPreference mDozeOnChargePreference;
+        private SwitchPreference mDozeOnChargePreference;
+        private SwitchPreference mPulseOnNewTracks;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -87,15 +85,22 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 (SwitchPreference) findPreference(Utils.AOD_KEY);
 
             mDozeOnChargePreference =
-                (SystemSettingSwitchPreference) findPreference(Utils.AOD_CHARGE_KEY);
+                (SwitchPreference) findPreference(Utils.AOD_CHARGE_KEY);
 
             if (Utils.isAoDAvailable(mContext)) {
                 mAoDPreference.setChecked(Utils.isAoDEnabled(mContext));
                 mAoDPreference.setOnPreferenceChangeListener(this);
+                mDozeOnChargePreference.setChecked(Utils.isDozeOnChargeEnabled(mContext));
+                mDozeOnChargePreference.setOnPreferenceChangeListener(this);
             } else {
                 mDozeOnChargePreference.setVisible(false);
                 mAoDPreference.setVisible(false);
             }
+
+            mPulseOnNewTracks =
+                    (SwitchPreference) findPreference(Utils.PULSE_ON_NEW_TRACKS);
+            mPulseOnNewTracks.setChecked(Utils.isPulseOnNewTracksEnabled(mContext));
+            mPulseOnNewTracks.setOnPreferenceChangeListener(this);
 
             mAmbientDisplayPreference =
                 (SwitchPreference) findPreference(Utils.AMBIENT_DISPLAY_KEY);
@@ -160,6 +165,15 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 mPocketPreference.setChecked(value);
                 Utils.enablePocketMode(value, mContext);
                 return true;
+            } else if (Utils.AOD_CHARGE_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
+                mDozeOnChargePreference.setChecked(value);
+                Utils.enableDozeOnCharge(value, mContext);
+                return true;
+            } else if (Utils.PULSE_ON_NEW_TRACKS.equals(key)) {
+                boolean value = (Boolean) newValue;
+                Utils.enablePulseOnNewTracks(value, mContext);
+                return true;
             }
             return false;
         }
@@ -171,6 +185,7 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mHandwavePreference.setEnabled(!aodEnabled);
             mPocketPreference.setEnabled(!aodEnabled);
             mDozeOnChargePreference.setEnabled(!aodEnabled);
+            mPulseOnNewTracks.setEnabled(!aodEnabled);
         }
 
         @Override

@@ -28,7 +28,7 @@
             android:title="@string/aod_setting_title"
             android:summary="@string/aod_setting_summary" />
 
-        <com.nusantara.support.preferences.SystemSettingSwitchPreference
+        <SwitchPreference
             android:key="doze_on_charge"
             android:defaultValue="false"
             android:title="@string/doze_on_charge_title"
